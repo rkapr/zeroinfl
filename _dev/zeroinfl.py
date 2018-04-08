@@ -11,7 +11,7 @@ import patsy
 FLOAT_EPS = np.finfo(float).eps
 pd.options.display.float_format = '{:,.12f}'.format
 
-#__all__ = [ZeroInflated]
+__all__ = ['ZeroInflated']
 
 
 class LinkClass(object):
@@ -132,17 +132,17 @@ class ZeroInflated(object):
     """
     def __init__(self, formula_str, data, dist = 'poisson', offsetx = None, offsetz = None,
                  link = 'logit', weights = None, missing='none', **kwargs):
-        self.set_data(formula_str, data, missing)
+        self._set_data(formula_str, data, missing)
         self.terms = {'Y':self.endog.columns.values[0],'X':self.X.columns.values,\
                       'Z':self.Z.columns.values}
         self.formula = formula_str
-        self.dist = self.dist_processing(dist)
-        self.link = self.link_processing(link)
+        self.dist = self._dist_processing(dist)
+        self.link = self._link_processing(link)
         self.n = len(self.endog)
-        self.set_wt_offset(weights, offsetx, offsetz)
-        self.linkobj = self.LinkClass_processing(self.link)
-        self.set_loglik(self.dist)
-        self.call = f"ZeroInflated(formula_str='{formula_str}', data={self.retrieve_name(data)}, dist='{dist}', offsetx={offsetx}, offsetz={offsetz},"
+        self._set_wt_offset(weights, offsetx, offsetz)
+        self.linkobj = self._LinkClass_processing(self.link)
+        self._set_loglik(self.dist)
+        self.call = f"ZeroInflated(formula_str='{formula_str}', data={self._retrieve_name(data)}, dist='{dist}', offsetx={offsetx}, offsetz={offsetz},"
         self.call = self.call + f" link='{link}', weights={weights}, missing='{missing}')"
         
         # Convenience variables
@@ -150,7 +150,9 @@ class ZeroInflated(object):
         self.kz = self.Z.shape[1]
         self.Y = np.squeeze(self.endog)
         self.Y0 = self.Y <= 0
-        self.Y1 = self.Y > 0       
+        self.Y1 = self.Y > 0
+        self.EM = True
+        self.reltol = (np.finfo(float).eps)**(1/1.6)       
         
         
     def print_obj(self):
@@ -159,7 +161,7 @@ class ZeroInflated(object):
 
 
 
-    def retrieve_name(self, var):
+    def _retrieve_name(self, var):
         """
         Gets the name of var. Does it from the out most frame inner-wards.
         :param var: variable to get name from.
@@ -170,11 +172,11 @@ class ZeroInflated(object):
             if len(names) > 0:
                 return names[-1]
         
-    def set_data(self, formula_str, data, missing):
+    def _set_data(self, formula_str, data, missing):
         self.endog, self.X, self.Z = self.formula_processing(formula_str, data, missing=missing) 
      
            
-    def set_wt_offset(self, weights, offsetx, offsetz):
+    def _set_wt_offset(self, weights, offsetx, offsetz):
         ## weights and offset
         
         if weights is None:
@@ -200,7 +202,7 @@ class ZeroInflated(object):
         self.offsetx = offsetx
         self.offsetz = offsetz
         
-    def set_loglik(self, dist):
+    def _set_loglik(self, dist):
         if dist is 'poisson':
             self.loglikfun = self.ziPoisson
             self.gradfun = self.gradPoisson
@@ -437,6 +439,8 @@ class ZeroInflated(object):
                 
                 ll_new = self.loglikfun(np.hstack((self.start['count'].values,\
                                 self.start['zero'].values,np.log(self.start['theta']))))
+
+        return self.start
     
      
     def fit(self, method = 'BFGS', EM = True, start = None, reltol = None,\
@@ -530,7 +534,7 @@ class ZeroInflated(object):
             self.start = start
         
      
-    def set_tolerance(self, factr, reltol):
+    def set_tolerance(self, factr=1.0, reltol = FLOAT_EPS**(1/1.6)):
         if factr < 1.0:
             warnings.warn('Minimum value of factr is 1.0.')
             factr = 1.0
@@ -538,7 +542,7 @@ class ZeroInflated(object):
             self.reltol = factr*(np.finfo(float).eps)**(1/1.6)
             
     @staticmethod    
-    def formula_processing(formula_str, data, missing):
+    def formula_processing(formula_str, data, missing='none'):
         # ToDo: Add 'missing' operations on df
         X_formula,Z_formula = formula_str.split("|")
         Z_formula = X_formula.split("~")[0]+" ~ "+ Z_formula
@@ -571,7 +575,7 @@ class ZeroInflated(object):
             
     
     @staticmethod
-    def link_processing(link):
+    def _link_processing(link):
         ## binary link processing
         linkstr = link
         linkList = ['logit','probit','cauchit','cloglog','log']
@@ -582,7 +586,7 @@ class ZeroInflated(object):
     
     
     @staticmethod
-    def LinkClass_processing(linkstr):
+    def _LinkClass_processing(linkstr):
         Link = {
             'logit': Logit(),
             'probit': Probit(),
@@ -593,7 +597,7 @@ class ZeroInflated(object):
         return Link.get(linkstr, Logit())
     
     @staticmethod
-    def dist_processing(dist):
+    def _dist_processing(dist):
         if dist not in ['poisson','negbin','geom']:
             sys.exit(dist+" method not yet implemented")
         return dist
