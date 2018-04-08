@@ -7,6 +7,7 @@ import sys
 import warnings
 import inspect
 import patsy
+from decimal import Decimal
 
 FLOAT_EPS = np.finfo(float).eps
 pd.options.display.float_format = '{:,.12f}'.format
@@ -693,7 +694,7 @@ class ZeroInflatedResults(object):
         print('definition here')        
         
     def summary(self):
-        #RESIDUAL_OUTPUT = "Pearson residuals:"
+        RESIDUAL_OUTPUT = "Pearson residuals:"
         MODEL1_HEADER = f"Count model cefficients ({self.dist} log link): "
         MODEL2_HEADER = f"Zero-inflation model coefficients (binomial with {self.linkstr} link): "
 
@@ -730,22 +731,24 @@ class ZeroInflatedResults(object):
             if pval_count[i] < 2e-16:
                 pc_format[i] = str("<2e-16")
             else:
-                pval_count[i] = str(round(pval_count[i], 5))
+                pc_format[i] = str("{:.4e}".format(Decimal(pval_count[i])))
 
         for i in np.arange(len(pval_zip)):
             if pval_zip[i] < 2e-16:
                 pz_format[i] = str("<2e-16")
             else:
-                pz_format[i] = str(round(pval_zip[i], 5))
+                pz_format[i] = str("{:.4e}".format(Decimal(pval_zip[i])))
                 
         ## chunk 3: output count model coefficients
         print(MODEL1_HEADER + "\n")
         coeff_label = ['', 'Estimate', 'Std. Error', 'z value', 'Pr(>|z|)'];
         data_count = [coeff_label] + list(zip(self.terms['X'], np.round(self.coefficients['count'],4), \
                                         np.round(se[0:self.kx], 4), np.round(z_count, 3), pc_format))
-
+        coeff_maxlen = np.max([len(x) for x in self.terms['X']])
+        SPACE = 20 if coeff_maxlen > 10 else 12
+        
         for i, d in enumerate(data_count):
-            line = '|'.join(str(x).rjust(12) for x in d)
+            line = '|'.join(str(x).rjust(SPACE) for x in d)
             print(line)
             if i == 0:
                 print('-' * len(line))
@@ -756,8 +759,10 @@ class ZeroInflatedResults(object):
         print(MODEL2_HEADER + "\n")
         data_zero = [coeff_label] + list(zip(self.terms['Z'], np.round(self.coefficients['zero'],4), \
                                         np.round(se[self.kx:], 4), np.round(z_zip, 3), pz_format))
+        coeff_maxlen = np.max([len(x) for x in self.terms['Z']])
+        SPACE = 20 if coeff_maxlen > 10 else 12  
         for i, d in enumerate(data_zero):
-            line = '|'.join(str(x).rjust(12) for x in d)
+            line = '|'.join(str(x).rjust(SPACE) for x in d)
             print(line)
             if i == 0:
                 print('-' * len(line))
