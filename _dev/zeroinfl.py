@@ -392,9 +392,9 @@ class ZeroInflated(object):
                 ll_old = ll_new
                 model_count = sm.GLM(endog = self.Y, exog = self.X, family = sm.families.NegativeBinomial(alpha = 1.0),\
                                   offset = self.offsetx , freq_weights = self.weights*(1-probi)).fit(\
-                                        #start_params = start['count'].values
-                                    sm.families.NegativeBinomial(alpha = 1.0\
-                                                                ).starting_mu(y=self.start['count'].values))
+                                        start_params = self.start['count'].values)
+                                    #sm.families.NegativeBinomial(alpha = 1.0\
+                                    #                            ).starting_mu(y=self.start['count'].values))
                 model_zero = sm.GLM(probi, exog = self.Z, family=sm.families.Binomial(link = self.linkobj.linkclass),\
                         offset = self.offsetz, freq_weights = self.weights).fit(start_params = self.start['zero'].values)
                 self.start = {'zero':model_zero.params, 'count':model_count.params}
