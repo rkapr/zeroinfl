@@ -8,6 +8,9 @@ import warnings
 import inspect
 import patsy
 from decimal import Decimal
+from IPython.core.display import display, HTML
+from scipy.stats import poisson
+from scipy.stats import nbinom
 
 FLOAT_EPS = np.finfo(float).eps
 pd.options.display.float_format = '{:,.12f}'.format
@@ -316,17 +319,24 @@ class ZeroInflated(object):
         mu = np.exp(eta)
         ## binary mean
         etaz = np.dot(self.Z, parms[np.arange(self.kx,self.kx+self.kz)]) + self.offsetz
-        muz = self.linkobj.link_inv(etaz)    
+        muz = self.linkobj.link_inv(etaz)   
         ## negbin size
         theta = np.exp(parms[self.kx+self.kz])
 
         ## densities at 0
         clogdens0 = st.nbinom.logpmf(0,*self.convert_params(theta = theta, mu = mu))
-        dens0 = muz*(1-self.Y1.astype(float)) + np.exp(np.log(1 - muz) + clogdens0)
+        dens0 = np.array(muz*(1-self.Y1.astype(float)) + np.exp(np.log(1 - muz) + clogdens0))
+        
+        #print('clogdens0')
+        #print(clogdens0[1])
+        #print(type(clogdens0))
+        #print('dens0')
+        #print(dens0[1])
+        #print(type(dens0))
         
         ## working residuals  
         wres_count = np.where(self.Y1,self.Y - mu*(self.Y + theta)/(mu + theta), \
-                              -np.exp(-np.log(dens0) + np.log(1 - muz) + clogdens0 + np.log(theta) +\
+                              -np.exp(-np.log(dens0) + np.log(1 - muz) + clogdens0 + np.log(theta) \
                                       -np.log(mu+theta) + np.log(mu))) 
         link_etaz = self.linkobj.link_inv_deriv(etaz)
         wres_zero  = np.where(self.Y1,-1/(1-muz) * link_etaz, \
@@ -426,11 +436,8 @@ class ZeroInflated(object):
                         offset = self.offsetz, freq_weights = self.weights, \
                         start_params = self.start['zero']).fit()
                 
-                mui = model_count.predict()   
-                theta = sm.GLM(endog = self.Y, exog = self.X, family = \
-                                     sm.families.NegativeBinomial(alpha = 1/model_count.scale),method = 'newton',\
-                                 offset = self.offsetx , freq_weights = self.weights*(1-probi) \
-                                     ).estimate_scale(mui)
+                mui = model_count.predict() 
+                theta = model_count.scale
                 
                 probi = model_zero.predict()
                 probi = probi/(probi + (1-probi)*st.nbinom.pmf(0,*self.convert_params(theta = theta, mu = mui)))
@@ -445,12 +452,13 @@ class ZeroInflated(object):
     
      
     def fit(self, method = 'BFGS', EM = True, start = None, reltol = None,\
-            options = {'disp': False, 'maxiter': 10000}, factr = 1.0):
+            options = {'disp': False, 'maxiter': 10000, 'gtol':(np.finfo(float).eps)**(1/1.6)}, factr = 1.0):
         self.set_tolerance(factr, reltol)
         self.optim_options = options
         self.method = method
         self.EM = EM
         self.set_start(start)
+        
         
         ## ML Estimation
         if (self.dist is 'negbin'):
@@ -496,8 +504,8 @@ class ZeroInflated(object):
         Result = ZeroInflatedResults(self.call, self.formula, self.terms, self.kx, self.kz, \
                                      self.dist, self.link, self.linkobj, self.optim_options, self.method, self.start,\
                                      self.reltol, self.weights, self.offsetx, self.offsetz,\
-                                     fitResult, coefc, coefz, theta, SE_logtheta, nobs, res, Yhat, vc, self.endog)
-
+                                     fitResult, coefc, coefz, theta, SE_logtheta, nobs, res, Yhat, vc, self.endog,\
+                                    self.X, self.Z)
         return Result
 
         
@@ -540,7 +548,7 @@ class ZeroInflated(object):
             warnings.warn('Minimum value of factr is 1.0.')
             factr = 1.0
         if reltol is None:
-            self.reltol = factr*(np.finfo(float).eps)**(1/1.6)
+            self.reltol = factr*((np.finfo(float).eps)**(1/1.6))
             
     @staticmethod    
     def formula_processing(formula_str, data, missing='none'):
@@ -607,7 +615,7 @@ class ZeroInflated(object):
 class ZeroInflatedResults(object):
     def __init__(self, call, formula, terms, kx, kz, dist, link, linkobj, options, method, start, reltol, \
                  weights, offsetx, offsetz, fitResult, coefc, coefz, theta, SE_logtheta,\
-                nobs, res, Yhat, vc, y):
+                nobs, res, Yhat, vc, y, X, Z):
         
         # Need to change final results objects names to standard names used in python
         self.call = call
@@ -647,6 +655,8 @@ class ZeroInflatedResults(object):
         self.fitted_values = Yhat
         self.vcov = vc
         self.y = y
+        self._X = X
+        self._Z = Z
         
         self.deviance = 0
         self.pearson_chi2 = 0
@@ -679,19 +689,38 @@ class ZeroInflatedResults(object):
         print("\nCall:\n" + self.call + "\n")
     
         # part 1: poisson count model
-        print(MODEL1_HEADER + "\n")
-        for line in [self.terms['X'], np.round(self.coefficients['count'],4)]:
-            print(('{:>12}' * p_count).format(*line))
-        print("\n")
+        print(MODEL1_HEADER)
+        count_coeff = list(zip(self.terms['X'], np.round(self.coefficients['count'], 4)))
+        c_df = pd.DataFrame(np.array(count_coeff).reshape(len(count_coeff),2), columns = list("  "))
+        # print(c_df)
+        display(HTML(c_df.to_html(index=False)))
+        print('\n')
+        
+        # for line in [self.terms['X'], np.round(self.coefficients['count'],4)]:
+        #     print(('{:>12}' * p_count).format(*line))
+        # print("\n")
         
         # part 2: logit model for predicting excess zeros
-        print(MODEL2_HEADER + "\n")
-        for line in [self.terms['Z'], np.round(self.coefficients['zero'],4)]:
-            print(('{:>12}' * p_zero).format(*line))
+        print(MODEL2_HEADER)
+        
+        zero_coeff = list(zip(self.terms['Z'], np.round(self.coefficients['zero'], 4)))
+        z_df = pd.DataFrame(np.array(zero_coeff).reshape(len(zero_coeff),2), columns = list("  "))
+        # print(z_df)
+        display(HTML(z_df.to_html(index=False)))
         print("\n")
+        
+        # for line in [self.terms['Z'], np.round(self.coefficients['zero'],4)]:
+        #     print(('{:>12}' * p_zero).format(*line))        
     
+    # return variance-covariance matrix for calculation purposes
     def covar(self):
-        print('definition here')        
+        return(self.vcov)
+    
+    # formatted version of the variance-covariance matrix
+    #def printCov(self):
+    #    pd.set_option('display.float_format', '{:.3E}'.format)
+    #    cov_mat = pd.DataFrame(self.vcov)
+    #    display(HTML(cov_mat.to_html(index=False)))
         
     def summary(self):
         RESIDUAL_OUTPUT = "Pearson residuals:"
@@ -774,3 +803,4 @@ class ZeroInflatedResults(object):
         if self.converged is False:
             print("Failed to converge.")
         print("Log-likelihood: " + str(self.loglik))        
+        
