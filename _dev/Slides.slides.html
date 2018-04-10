@@ -12024,7 +12024,7 @@ Rajan Kapoor</center><p>4/11/2018</p>
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">zeroinfl</span> <span class="k">import</span> <span class="o">*</span>
@@ -12045,6 +12045,23 @@ Rajan Kapoor</center><p>4/11/2018</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/anaconda/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -12057,7 +12074,7 @@ Rajan Kapoor</center><p>4/11/2018</p>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ZeroInflated</span><span class="p">(</span><span class="n">formula_str</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -12072,7 +12089,7 @@ Rajan Kapoor</center><p>4/11/2018</p>
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[4]:</div>
+<div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -12088,22 +12105,22 @@ linkobj:
     linkstr: logit
     link: log(p/(1-p))
     linkinv: exp(eta)/(1+exp(eta))
-Message: Desired error not necessarily achieved due to precision loss.
+Message: Optimization terminated successfully.
 Result: 
     Count:
-Intercept              1.393671948863
-health[T.excellent]   -0.307753660408
-health[T.poor]         0.254201322908
-gender[T.male]        -0.064859143867
-privins[T.yes]         0.085441066717
+Intercept              1.393671948862
+health[T.excellent]   -0.307753660409
+health[T.poor]         0.254201322909
+gender[T.male]        -0.064859143868
+privins[T.yes]         0.085441066716
 hosp                   0.159127058413
 numchron               0.103280224020
 school                 0.019591000079
 dtype: float64
     Zero:
-Intercept             -1.733641644218
-health[T.excellent]    0.474905518413
-health[T.poor]        -0.399155782466
+Intercept             -1.733641644220
+health[T.excellent]    0.474905518428
+health[T.poor]        -0.399155782468
 dtype: float64 
 df_null: 4404 
 df_resid: 4395</pre>
@@ -12114,6 +12131,267 @@ df_resid: 4395</pre>
 </div>
 </div>
 
+</div></div></section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Usage:-printModel()">Usage: printModel()<a class="anchor-link" href="#Usage:-printModel()">&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ZeroInflated</span><span class="p">(</span><span class="n">formula_str</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">printModel</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Call:
+ZeroInflated(formula_str=&#39;ofp ~ hosp + health + numchron + gender + school + privins | health&#39;, data=df, dist=&#39;poisson&#39;, offsetx=None, offsetz=None, link=&#39;logit&#39;, weights=None, missing=&#39;none&#39;)
+
+Count model cefficients (poisson log link): 
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Intercept</td>
+      <td>1.3937</td>
+    </tr>
+    <tr>
+      <td>health[T.excellent]</td>
+      <td>-0.3078</td>
+    </tr>
+    <tr>
+      <td>health[T.poor]</td>
+      <td>0.2542</td>
+    </tr>
+    <tr>
+      <td>gender[T.male]</td>
+      <td>-0.0649</td>
+    </tr>
+    <tr>
+      <td>privins[T.yes]</td>
+      <td>0.0854</td>
+    </tr>
+    <tr>
+      <td>hosp</td>
+      <td>0.1591</td>
+    </tr>
+    <tr>
+      <td>numchron</td>
+      <td>0.1033</td>
+    </tr>
+    <tr>
+      <td>school</td>
+      <td>0.0196</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+
+Zero-inflation model coefficients (binomial with logit link): 
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Intercept</td>
+      <td>-1.7336</td>
+    </tr>
+    <tr>
+      <td>health[T.excellent]</td>
+      <td>0.4749</td>
+    </tr>
+    <tr>
+      <td>health[T.poor]</td>
+      <td>-0.3992</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Usage:-summary()">Usage: summary()<a class="anchor-link" href="#Usage:-summary()">&#182;</a></h1>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ZeroInflated</span><span class="p">(</span><span class="n">formula_str</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Call:
+ZeroInflated(formula_str=&#39;ofp ~ hosp + health + numchron + gender + school + privins | health&#39;, data=df, dist=&#39;poisson&#39;, offsetx=None, offsetz=None, link=&#39;logit&#39;, weights=None, missing=&#39;none&#39;)
+
+Pearson residuals:
+
+       Min        1Q    Median        3Q       Max
+ -28.81532  -3.64394  -1.42507   1.97142  72.65782
+
+
+Count model cefficients (poisson log link): 
+
+                    |            Estimate|          Std. Error|             z value|            Pr(&gt;|z|)
+--------------------------------------------------------------------------------------------------------
+           Intercept|              1.3937|              0.0245|               56.86|              &lt;2e-16
+ health[T.excellent]|             -0.3078|              0.0314|              -9.791|              &lt;2e-16
+      health[T.poor]|              0.2542|              0.0177|              14.339|              &lt;2e-16
+      gender[T.male]|             -0.0649|              0.0131|              -4.946|           7.5608e-7
+      privins[T.yes]|              0.0854|              0.0173|               4.936|           7.9923e-7
+                hosp|              0.1591|              0.0061|              26.262|              &lt;2e-16
+            numchron|              0.1033|              0.0047|              21.805|              &lt;2e-16
+              school|              0.0196|              0.0019|              10.393|              &lt;2e-16
+
+
+Zero-inflation model coefficients (binomial with logit link): 
+
+                    |            Estimate|          Std. Error|             z value|            Pr(&gt;|z|)
+--------------------------------------------------------------------------------------------------------
+           Intercept|             -1.7336|              0.0481|              -36.04|              &lt;2e-16
+ health[T.excellent]|              0.4749|              0.1455|               3.265|           1.0960e-3
+      health[T.poor]|             -0.3992|              0.1466|              -2.724|           6.4570e-3
+
+
+---
+Number of iterations in BFGS optimization: 13
+Log-likelihood: -16292.017696721066
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Results-from-pscl-package-in-R">Results from pscl package in R<a class="anchor-link" href="#Results-from-pscl-package-in-R">&#182;</a></h1><pre>
+
+> model &lt;- pscl::zeroinfl(ofp ~ health+gender+privins+hosp+numchron+school| health,data = dt, dist = 'poisson') 
+> summary(model)
+
+Call:
+pscl::zeroinfl(formula = ofp ~ health + gender + privins + hosp + numchron + school | health, 
+    data = dt, dist = "poisson")
+
+Pearson residuals:
+    Min      1Q  Median      3Q     Max 
+-2.5417 -1.2132 -0.4612  0.5889 25.1526 
+
+Count model coefficients (poisson with log link):
+                 Estimate Std. Error z value Pr(>|z|)    
+(Intercept)      1.393672   0.024506  56.870  < 2e-16 ***
+healthpoor       0.254201   0.017726  14.340  < 2e-16 ***
+healthexcellent -0.307754   0.031428  -9.792  < 2e-16 ***
+gendermale      -0.064859   0.013111  -4.947 7.54e-07 ***
+privinsyes       0.085441   0.017310   4.936 7.97e-07 ***
+hosp             0.159127   0.006059  26.262  < 2e-16 ***
+numchron         0.103280   0.004736  21.806  < 2e-16 ***
+school           0.019591   0.001885  10.395  < 2e-16 ***
+
+Zero-inflation model coefficients (binomial with logit link):
+                Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     -1.73364    0.04809 -36.050  < 2e-16 ***
+healthpoor      -0.39916    0.14655  -2.724  0.00646 ** 
+healthexcellent  0.47490    0.14542   3.266  0.00109 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Number of iterations in BFGS optimization: 17 
+Log-likelihood: -1.629e+04 on 11 Df
+</pre>
+</div>
+</div>
 </div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
