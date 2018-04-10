@@ -769,8 +769,8 @@ class ZeroInflatedResults(object):
         coeff_maxlen = np.max([len(x) for x in self.terms['X']])
         SPACE = 20 if coeff_maxlen > 10 else 12
         
-        for i, d in enumerate(data_count):
-            line = '|'.join(str(x).rjust(SPACE) for x in d)
+        for i, d in enumerate(data_count): 
+            line = '|'.join(str(x).rjust(SPACE if x==d[0] else 10) for x in d)
             print(line)
             if i == 0:
                 print('-' * len(line))
@@ -784,7 +784,7 @@ class ZeroInflatedResults(object):
         coeff_maxlen = np.max([len(x) for x in self.terms['Z']])
         SPACE = 20 if coeff_maxlen > 10 else 12  
         for i, d in enumerate(data_zero):
-            line = '|'.join(str(x).rjust(SPACE) for x in d)
+            line = '|'.join(str(x).rjust(SPACE if x==d[0] else 10) for x in d)
             print(line)
             if i == 0:
                 print('-' * len(line))
