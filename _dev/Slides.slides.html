@@ -36,7 +36,7 @@ if( window.location.search.match( /print-pdf/gi ) ) {
 
 <!-- Loading the mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -58,7 +58,7 @@ if( window.location.search.match( /print-pdf/gi ) ) {
     <!-- End of mathjax configuration -->
 
 <!-- Get Font-awesome from cdn -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css">
 
 <style type="text/css">
     /*!
@@ -11776,7 +11776,6 @@ ul.typeahead-list > li > a {
 /* Overrides of notebook CSS for static HTML export */
 .reveal {
   font-size: 160%;
-  overflow-y: scroll;
 }
 .reveal pre {
   width: inherit;
@@ -11806,6 +11805,41 @@ ul.typeahead-list > li > a {
 }
 .reveal .progress {
   position: static;
+}
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: #727272;
+}
+.reveal .controls .navigate-left.enabled:hover,
+.reveal .controls .navigate-left.enabled.enabled:hover {
+  border-right-color: #dfdfdf;
+}
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: #727272;
+}
+.reveal .controls .navigate-right.enabled:hover,
+.reveal .controls .navigate-right.enabled.enabled:hover {
+  border-left-color: #dfdfdf;
+}
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: #727272;
+}
+.reveal .controls .navigate-up.enabled:hover,
+.reveal .controls .navigate-up.enabled.enabled:hover {
+  border-bottom-color: #dfdfdf;
+}
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: #727272;
+}
+.reveal .controls .navigate-down.enabled:hover,
+.reveal .controls .navigate-down.enabled.enabled:hover {
+  border-top-color: #dfdfdf;
+}
+.reveal .progress span {
+  background: #727272;
 }
 div.input_area {
   padding: 0.06em;
@@ -11840,6 +11874,19 @@ a.anchor-link {
 .rendered_html p {
   text-align: inherit;
 }
+::-webkit-scrollbar
+{
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar *
+{
+  background:transparent;
+}
+::-webkit-scrollbar-thumb
+{
+  background: #727272 !important;
+}
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
@@ -11854,8 +11901,7 @@ a.anchor-link {
 <div class="reveal">
 <div class="slides">
 <section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11880,8 +11926,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11890,18 +11935,34 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Intro:-Zero-Inflation">Intro: Zero Inflation<a class="anchor-link" href="#Intro:-Zero-Inflation">&#182;</a></h1><h3 id="--Count-models-with-extra-zeros-than-what-could-be-modelled-by-Poisson-(or-Negative-Binomial-or-Geometric)-Regression.">- Count models with extra zeros than what could be modelled by Poisson (or Negative Binomial or Geometric) Regression.<a class="anchor-link" href="#--Count-models-with-extra-zeros-than-what-could-be-modelled-by-Poisson-(or-Negative-Binomial-or-Geometric)-Regression.">&#182;</a></h3><h3 id="--Applications:-(Add-images/graphics)">- Applications: (Add images/graphics)<a class="anchor-link" href="#--Applications:-(Add-images/graphics)">&#182;</a></h3>
+<h1 id="Intro:-Zero-Inflation">Intro: Zero Inflation<a class="anchor-link" href="#Intro:-Zero-Inflation">&#182;</a></h1><h3 id="---Shortcomings-of-regular-poisson-regression-(assumptions-violated)---">-- Shortcomings of regular poisson regression (assumptions violated) --<a class="anchor-link" href="#---Shortcomings-of-regular-poisson-regression-(assumptions-violated)---">&#182;</a></h3><h3 id="---Count-models-with-extra-zeros-than-what-could-be-modelled-by-Poisson-(or-Negative-Binomial-or-Geometric)-Regression---">-- Count models with extra zeros than what could be modelled by Poisson (or Negative Binomial or Geometric) Regression --<a class="anchor-link" href="#---Count-models-with-extra-zeros-than-what-could-be-modelled-by-Poisson-(or-Negative-Binomial-or-Geometric)-Regression---">&#182;</a></h3><h3 id="---Insert-some-mathematical-formulations-here---">-- Insert some mathematical formulations here --<a class="anchor-link" href="#---Insert-some-mathematical-formulations-here---">&#182;</a></h3>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Applications-in-Different-Fields">Applications in Different Fields<a class="anchor-link" href="#Applications-in-Different-Fields">&#182;</a></h1><h3 id="Number-of-House-and-Senate-Actions-Taken-in-Response-to-Supreme-Court-Decisions-(1979-88)">Number of House and Senate Actions Taken in Response to Supreme Court Decisions (1979-88)<a class="anchor-link" href="#Number-of-House-and-Senate-Actions-Taken-in-Response-to-Supreme-Court-Decisions-(1979-88)">&#182;</a></h3><p>See paper <a href="http://journals.sagepub.com/doi/pdf/10.1177/0049124198026003004">here</a>
+<img src="supreme_ct.png" alt=""></p>
+<h3 id="Education">Education<a class="anchor-link" href="#Education">&#182;</a></h3><ul>
+<li>Modeling the number of courses failed in 2008-2009 at Iran University of Medical Sciences (See paper <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4764272/">here</a>)</li>
+</ul>
+<p><img src="fail.png" alt=""></p>
+<h3 id="Software-Analysis">Software Analysis<a class="anchor-link" href="#Software-Analysis">&#182;</a></h3><ul>
+<li>Modeling the number of faults in a source file during system tests (See paper <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=989459">here</a>).</li>
+</ul>
+<p><img src="faults.png" alt=""></p>
+
 </div>
 </div>
 </div><aside class="notes">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11909,7 +11970,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 <a href="https://www.researchgate.net/profile/Diane_Lambert2/publication/254333007_Zero-Inflated_Poisson_Regression_With_An_Application_to_Defects_in_Manufacturing/links/561d38d608aec7945a252dbb/Zero-Inflated-Poisson-Regression-With-An-Application-to-Defects-in-Manufacturing.pdf">https://www.researchgate.net/profile/Diane_Lambert2/publication/254333007_Zero-Inflated_Poisson_Regression_With_An_Application_to_Defects_in_Manufacturing/links/561d38d608aec7945a252dbb/Zero-Inflated-Poisson-Regression-With-An-Application-to-Defects-in-Manufacturing.pdf</a></p>
 <h3 id="--Social-Science:">- Social Science:<a class="anchor-link" href="#--Social-Science:">&#182;</a></h3><p>Estimating congressional response to Supreme Court decisions from 1979 to 1988 ("Warren and Burger eras": Supreme Court Chief Justices during that time.)
 <a href="http://journals.sagepub.com/doi/pdf/10.1177/0049124198026003004">http://journals.sagepub.com/doi/pdf/10.1177/0049124198026003004</a></p>
-<h3 id="--Software-Analysis:">- Software Analysis:<a class="anchor-link" href="#--Software-Analysis:">&#182;</a></h3><p>An application of zero-inflated Poisson regression for software fault prediction.</p>
+<h3 id="--Education">- Education<a class="anchor-link" href="#--Education">&#182;</a></h3><p>An application of zero-inflated Poisson regression for software fault prediction.</p>
 <h3 id="--Traffic-Engineering:">- Traffic Engineering:<a class="anchor-link" href="#--Traffic-Engineering:">&#182;</a></h3><p>Modeling crashes involving pedestrians and motorized traffic</p>
 <h3 id="--Genetics:">- Genetics:<a class="anchor-link" href="#--Genetics:">&#182;</a></h3><p>A zero-inflated poisson model for genetic analysis of the number of mastitis cases in Norwegian Red cows.</p>
 
@@ -11917,8 +11978,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </aside></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11927,21 +11987,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11950,21 +11996,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11973,8 +12005,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12009,8 +12040,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12019,8 +12049,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12070,7 +12099,9 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/anaconda/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
@@ -12083,8 +12114,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12109,7 +12139,9 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 
 
 <div class="output_area">
+
 <div class="prompt output_prompt">Out[2]:</div>
+
 
 
 
@@ -12152,8 +12184,7 @@ df_resid: 4395</pre>
 </div>
 
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12178,7 +12209,9 @@ df_resid: 4395</pre>
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
@@ -12204,8 +12237,7 @@ Zero-inflation model coefficients (binomial with logit link):
 </div>
 
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12213,8 +12245,7 @@ Zero-inflation model coefficients (binomial with logit link):
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12240,8 +12271,7 @@ Zero-inflation model coefficients (binomial with logit link):
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12266,7 +12296,9 @@ Zero-inflation model coefficients (binomial with logit link):
 
 
 <div class="output_area">
+
 <div class="prompt"></div>
+
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
@@ -12308,8 +12340,7 @@ Log-likelihood: -1.629e+4 on 11 Df.
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12317,8 +12348,7 @@ Log-likelihood: -1.629e+4 on 11 Df.
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12359,8 +12389,7 @@ Log-likelihood: -1.629e+04 on 11 Df
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12369,8 +12398,7 @@ Log-likelihood: -1.629e+04 on 11 Df
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12447,8 +12475,7 @@ Log-likelihood: -1.629e+04 on 11 Df
 </div>
 </div><aside class="notes">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12471,8 +12498,7 @@ health[T.poor]        <b>-0.399155</b>782468   <b>-0.399155</b>156555 <br>
 </div>
 </div>
 </aside></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12549,8 +12575,7 @@ health[T.poor]        <b>-0.399155</b>782468   <b>-0.399155</b>156555 <br>
 </div>
 </div><aside class="notes">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12582,8 +12607,7 @@ health[T.poor]         19.444894315458
 </div>
 </div>
 </aside></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12665,8 +12689,7 @@ health[T.poor]         19.444894315458
 </div>
 </div><aside class="notes">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12706,8 +12729,7 @@ dtype: float64
 </div>
 </aside><aside class="notes">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12753,8 +12775,7 @@ X(Intercept)      Xhealthpoor Xhealthexcellent      Xgendermale      Xprivinsyes
 </div>
 </div>
 </aside></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12762,8 +12783,7 @@ X(Intercept)      Xhealthpoor Xhealthexcellent      Xgendermale      Xprivinsyes
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12798,8 +12818,7 @@ X(Intercept)      Xhealthpoor Xhealthexcellent      Xgendermale      Xprivinsyes
 </div>
 </div><aside class="notes">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12813,16 +12832,7 @@ X(Intercept)      Xhealthpoor Xhealthexcellent      Xgendermale      Xprivinsyes
 </div>
 </div>
 </div>
-</aside></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div></section></section>
+</aside>
 </div>
 </div>
 
@@ -12847,8 +12857,7 @@ require(
             progress: true,
             history: true,
 
-            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-            transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+            transition: "slide",
 
             // Optional libraries used to extend on reveal.js
             dependencies: [
@@ -12868,13 +12877,25 @@ require(
 
         Reveal.addEventListener('slidechanged', update);
 
-        var update_scroll = function(event){
-          $(".reveal").scrollTop(0);
-        };
+        function setScrollingSlide() {
+            var scroll = false
+            if (scroll === true) {
+              var h = $('.reveal').height() * 0.95;
+              $('section.present').find('section')
+                .filter(function() {
+                  return $(this).height() > h;
+                })
+                .css('height', 'calc(95vh)')
+                .css('overflow-y', 'scroll')
+                .css('margin-top', '20px');
+            }
+        }
 
-        Reveal.addEventListener('slidechanged', update_scroll);
+        // check and set the scrolling slide every time the slide change
+        Reveal.addEventListener('slidechanged', setScrollingSlide);
 
     }
+
 );
 </script>
 
