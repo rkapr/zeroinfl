@@ -682,28 +682,30 @@ class ZeroInflatedResults(object):
         print("\nCall:\n" + self.call + "\n")
     
         # part 1: poisson count model
-        print(MODEL1_HEADER)
-        count_coeff = list(zip(self.terms['X'], np.round(self.coefficients['count'], 4)))
-        c_df = pd.DataFrame(np.array(count_coeff).reshape(len(count_coeff),2), columns = list("  "))
-        # print(c_df)
-        display(HTML(c_df.to_html(index=False)))
-        print('\n')
+        print(MODEL1_HEADER )
+        #count_coeff = list(zip(self.terms['X'], np.round(self.coefficients['count'], 4)))
+        #c_df = pd.DataFrame(np.array(count_coeff).reshape(len(count_coeff),2), columns = list("  "))
+        c_df = pd.DataFrame(np.array(self.coefficients['count']),index = self.terms['X'], columns = list(" ")\
+                           ).applymap("{0:.5f}".format)
+        #print (z_df.to_string())
+        print(c_df.T)
+        #display(HTML(pd.DataFrame(c_df).to_html))
+        #print('\n')
         
         # for line in [self.terms['X'], np.round(self.coefficients['count'],4)]:
         #     print(('{:>12}' * p_count).format(*line))
-        # print("\n")
+        print("\n")
         
         # part 2: logit model for predicting excess zeros
         print(MODEL2_HEADER)
         
-        zero_coeff = list(zip(self.terms['Z'], np.round(self.coefficients['zero'], 4)))
-        z_df = pd.DataFrame(np.array(zero_coeff).reshape(len(zero_coeff),2), columns = list("  "))
-        # print(z_df)
-        display(HTML(z_df.to_html(index=False)))
-        print("\n")
-        
-        # for line in [self.terms['Z'], np.round(self.coefficients['zero'],4)]:
-        #     print(('{:>12}' * p_zero).format(*line))        
+        #zero_coeff = list(zip(self.terms['Z'], np.round(self.coefficients['zero'], 4)))
+        #z_df = pd.DataFrame(np.array(zero_coeff).reshape(len(zero_coeff),2), columns = list("  "))
+        #z_df = pd.DataFrame(np.array(zero_coeff).reshape(len(zero_coeff),2), columns = list("  "))
+        z_df = pd.DataFrame(np.array(self.coefficients['zero']),index = self.terms['Z'], columns = list(" ")\
+                           ).applymap("{0:.5f}".format)
+        #print (z_df.to_string())
+        print(z_df.T)        
     
     # return variance-covariance matrix for calculation purposes
     def covar(self):
@@ -722,17 +724,17 @@ class ZeroInflatedResults(object):
 
         
         ## chunk 1: output call, formula
-        print("\nCall:\n" + self.call + "\n")
+        print("\nCall:\n" + self.call +'\n')
         
         
         ## chunk 2: output pearson residuals -- residuals function still needs to be implemented
         # object$residuals = residuals(object, type = "pearson")
         resid_summ = np.round(st.mstats.mquantiles(self.residuals, prob = [0, 0.25, 0.5, 0.75, 1.0]), 5)
         resid_str  = ['Min', '1Q', 'Median', '3Q','Max'];
-        print(RESIDUAL_OUTPUT + '\n')
+        print(RESIDUAL_OUTPUT)
         for line in [resid_str, resid_summ]:
             print(('{:>10}' * len(resid_summ)).format(*line))
-        print("\n")
+        #print("\n")
 
         # compute standard error for all coefficients (both models)
         se = np.sqrt(np.diagonal(self.vcov)) 
@@ -762,7 +764,8 @@ class ZeroInflatedResults(object):
                 pz_format[i] = str("{:.4e}".format(Decimal(pval_zip[i])))
                 
         ## chunk 3: output count model coefficients
-        print(MODEL1_HEADER + "\n")
+        print('\n')
+        print(MODEL1_HEADER)
         coeff_label = ['', 'Estimate', 'Std. Error', 'z value', 'Pr(>|z|)'];
         data_count = [coeff_label] + list(zip(self.terms['X'], np.round(self.coefficients['count'],4), \
                                         np.round(se[0:self.kx], 4), np.round(z_count, 3), pc_format))
@@ -778,7 +781,7 @@ class ZeroInflatedResults(object):
         print('\n')
                     
         ## chunk 4: output zero-inflation model coefficients
-        print(MODEL2_HEADER + "\n")
+        print(MODEL2_HEADER)
         data_zero = [coeff_label] + list(zip(self.terms['Z'], np.round(self.coefficients['zero'],4), \
                                         np.round(se[self.kx:], 4), np.round(z_zip, 3), pz_format))
         coeff_maxlen = np.max([len(x) for x in self.terms['Z']])
@@ -788,7 +791,7 @@ class ZeroInflatedResults(object):
             print(line)
             if i == 0:
                 print('-' * len(line))
-        print('\n')
+        #print('\n')
         print('---')
         
         ## chunk 5: Number of iterations, log-likelihood
@@ -796,4 +799,3 @@ class ZeroInflatedResults(object):
         if self.converged is False:
             print("Failed to converge.")
         print("Log-likelihood: " + str(self.loglik))        
-        
