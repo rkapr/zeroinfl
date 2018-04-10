@@ -327,13 +327,6 @@ class ZeroInflated(object):
         clogdens0 = st.nbinom.logpmf(0,*self.convert_params(theta = theta, mu = mu))
         dens0 = np.array(muz*(1-self.Y1.astype(float)) + np.exp(np.log(1 - muz) + clogdens0))
         
-        #print('clogdens0')
-        #print(clogdens0[1])
-        #print(type(clogdens0))
-        #print('dens0')
-        #print(dens0[1])
-        #print(type(dens0))
-        
         ## working residuals  
         wres_count = np.where(self.Y1,self.Y - mu*(self.Y + theta)/(mu + theta), \
                               -np.exp(-np.log(dens0) + np.log(1 - muz) + clogdens0 + np.log(theta) \
@@ -452,7 +445,7 @@ class ZeroInflated(object):
     
      
     def fit(self, method = 'BFGS', EM = True, start = None, reltol = None,\
-            options = {'disp': False, 'maxiter': 10000, 'gtol':(np.finfo(float).eps)**(1/1.6)}, factr = 1.0):
+            options = {'disp': False, 'maxiter': 10000}, factr = 1.0):
         self.set_tolerance(factr, reltol)
         self.optim_options = options
         self.method = method
