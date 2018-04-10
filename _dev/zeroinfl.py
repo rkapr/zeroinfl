@@ -691,7 +691,8 @@ class ZeroInflatedResults(object):
         print(c_df.T)
         #display(HTML(pd.DataFrame(c_df).to_html))
         #print('\n')
-        
+        if self.dist == 'negbin':
+            print(f'Theta = {self.theta:0.4f}')
         # for line in [self.terms['X'], np.round(self.coefficients['count'],4)]:
         #     print(('{:>12}' * p_count).format(*line))
         print("\n")
@@ -795,7 +796,9 @@ class ZeroInflatedResults(object):
         print('---')
         
         ## chunk 5: Number of iterations, log-likelihood
+        if self.dist == 'negbin':
+            print(f'Theta = {self.theta:0.4f}')
         print(f"Number of iterations in {self.method} optimization: " + str(self.iters));
         if self.converged is False:
             print("Failed to converge.")
-        print("Log-likelihood: " + str(self.loglik))        
+        print("Log-likelihood: "+str("{:.3e}".format(Decimal(self.loglik)))+f" on {self.df_model} Df.")        

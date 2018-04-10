@@ -12154,7 +12154,7 @@ df_resid: 4395</pre>
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ZeroInflated</span><span class="p">(</span><span class="n">formula_str</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">printModel</span><span class="p">()</span>
@@ -12177,109 +12177,16 @@ Call:
 ZeroInflated(formula_str=&#39;ofp ~ hosp + health + numchron + gender + school + privins | health&#39;, data=df, dist=&#39;poisson&#39;, offsetx=None, offsetz=None, link=&#39;logit&#39;, weights=None, missing=&#39;none&#39;)
 
 Count model cefficients (poisson log link): 
-</pre>
-</div>
-</div>
+  Intercept health[T.excellent] health[T.poor] gender[T.male] privins[T.yes]  \
+    1.39367            -0.30775        0.25420       -0.06486        0.08544   
 
-<div class="output_area">
-<div class="prompt"></div>
+      hosp numchron   school  
+   0.15913  0.10328  0.01959  
 
-
-<div class="output_html rendered_html output_subarea ">
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Intercept</td>
-      <td>1.3937</td>
-    </tr>
-    <tr>
-      <td>health[T.excellent]</td>
-      <td>-0.3078</td>
-    </tr>
-    <tr>
-      <td>health[T.poor]</td>
-      <td>0.2542</td>
-    </tr>
-    <tr>
-      <td>gender[T.male]</td>
-      <td>-0.0649</td>
-    </tr>
-    <tr>
-      <td>privins[T.yes]</td>
-      <td>0.0854</td>
-    </tr>
-    <tr>
-      <td>hosp</td>
-      <td>0.1591</td>
-    </tr>
-    <tr>
-      <td>numchron</td>
-      <td>0.1033</td>
-    </tr>
-    <tr>
-      <td>school</td>
-      <td>0.0196</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
 
 Zero-inflation model coefficients (binomial with logit link): 
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-
-<div class="output_html rendered_html output_subarea ">
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Intercept</td>
-      <td>-1.7336</td>
-    </tr>
-    <tr>
-      <td>health[T.excellent]</td>
-      <td>0.4749</td>
-    </tr>
-    <tr>
-      <td>health[T.poor]</td>
-      <td>-0.3992</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-
+  Intercept health[T.excellent] health[T.poor]
+   -1.73364             0.47491       -0.39916
 </pre>
 </div>
 </div>
@@ -12361,7 +12268,16 @@ Log-likelihood: -16292.017696721066
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Results-from-pscl-package-in-R">Results from pscl package in R<a class="anchor-link" href="#Results-from-pscl-package-in-R">&#182;</a></h1><pre>
+<h1 id="Results-from-pscl-package-in-R">Results from pscl package in R<a class="anchor-link" href="#Results-from-pscl-package-in-R">&#182;</a></h1>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<pre>
 
 > model &lt;- pscl::zeroinfl(ofp ~ health+gender+privins+hosp+numchron+school| health,data = dt, dist = 'poisson') 
 > summary(model)
