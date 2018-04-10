@@ -11865,8 +11865,17 @@ a.anchor-link {
 <br>
 <br>
 <br></p>
-<center>Eric Chuu,
-Rajan Kapoor</center><p>4/11/2018</p>
+<p><center>Eric Chuu,
+Rajan Kapoor</center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Project Repo: <a href="https://github.com/rkapr/zeroinfl">github.com/rkapr/zeroinfl</a> <br>
+Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinfl</a>/</p>
+<p>4/11/2018</p>
 
 </div>
 </div>
@@ -12210,18 +12219,19 @@ Zero-inflation model coefficients (binomial with logit link):
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <pre>
-> model &lt;- pscl::zeroinfl(ofp ~ health+gender+privins+hosp+numchron+school| health,data = dt, dist = 'poisson')
+> model &lt;- pscl::zeroinfl(ofp ~ health+gender+privins+hosp+numchron+school| health,
+  data = dt, dist = 'poisson')
 > print(model)
 
 Call:
-pscl::zeroinfl(formula = ofp ~ health + gender + privins + hosp + numchron + school | health, 
+pscl::zeroinfl(formula = ofp ~ health + gender + privins + hosp + numchron + school | health,
     data = dt, dist = "poisson")
 
 Count model coefficients (poisson with log link):
-    (Intercept)       healthpoor  healthexcellent       gendermale       privinsyes             hosp  
-        1.39367          0.25420         -0.30775         -0.06486          0.08544          0.15913  
-       numchron           school  
-        0.10328          0.01959  
+  (Intercept)   healthpoor  healthexcellent   gendermale   privinsyes     hosp  
+      1.39367      0.25420         -0.30775     -0.06486      0.08544  0.15913  
+     numchron       school  
+      0.10328      0.01959  
 
 Zero-inflation model coefficients (binomial with logit link):
     (Intercept)       healthpoor  healthexcellent  
@@ -12758,9 +12768,29 @@ X(Intercept)      Xhealthpoor Xhealthexcellent      Xgendermale      Xprivinsyes
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>A</li>
-<li>B</li>
-<li>C</li>
+<li>Major:<ul>
+<li>Summary statistics, predict()</li>
+<li>Vuong's Test</li>
+<li>Testing on 4 more datasets</li>
+</ul>
+</li>
+<li>Minor:<ul>
+<li>Dealing with missing values</li>
+<li>Functions docs</li>
+<li>Use standard python results class names</li>
+</ul>
+</li>
+<li>Exploring:<ul>
+<li>Should ZeroInflatedResults class be inherited from ZeroInflated class</li>
+<li>Should ZeroInflated class be inherited from Loglikelihood class</li>
+</ul>
+</li>
+<li>Future:<ul>
+<li>Regularized optimization for ZIP, ZINB, ZIG</li>
+<li>Negetive Binomial regression with joint estimation of theta and mu with variable weights.</li>
+<li>Use above for optimal EM estimation of starting values for ZINB.</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -12775,25 +12805,14 @@ X(Intercept)      Xhealthpoor Xhealthexcellent      Xgendermale      Xprivinsyes
 <p>from current Slides folder, in terminal:</p>
 <p>jupyter nbconvert Slides.ipynb --to slides --post serve</p>
 <p><a href="http://nbconvert.readthedocs.io/en/latest/usage.html">http://nbconvert.readthedocs.io/en/latest/usage.html</a> for</p>
-<p>jupyter nbconvert Slides.ipynb</p>
+<p>jupyter nbconvert Slides.ipynb --to slides</p>
+<p>then move it to main folder to check</p>
+<p>To change on project website, rename it to index.html and push.</p>
 
 </div>
 </div>
 </div>
-</aside>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div></section></section><section><section>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
