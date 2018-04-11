@@ -11930,8 +11930,8 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><p><h1>  -  Intro: Zero Inflation </h1></p>
-<h2 id="---ML-and-EM-Equations">-  ML and EM Equations<a class="anchor-link" href="#---ML-and-EM-Equations">&#182;</a></h2><h2 id="---Algorithm-flowchart">-  Algorithm flowchart<a class="anchor-link" href="#---Algorithm-flowchart">&#182;</a></h2><h2 id="---Classes-and-Methods">-  Classes and Methods<a class="anchor-link" href="#---Classes-and-Methods">&#182;</a></h2><h2 id="---Demo">-  Demo<a class="anchor-link" href="#---Demo">&#182;</a></h2><h2 id="---Results">-  Results<a class="anchor-link" href="#---Results">&#182;</a></h2><h2 id="---To-Do">-  To Do<a class="anchor-link" href="#---To-Do">&#182;</a></h2>
+<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><p><h1>  -  Introduction </h1></p>
+<h2 id="---ZIP-Model-Specifications">-  ZIP Model Specifications<a class="anchor-link" href="#---ZIP-Model-Specifications">&#182;</a></h2><h2 id="---Algorithm-flowchart">-  Algorithm flowchart<a class="anchor-link" href="#---Algorithm-flowchart">&#182;</a></h2><h2 id="---Classes-and-Methods">-  Classes and Methods<a class="anchor-link" href="#---Classes-and-Methods">&#182;</a></h2><h2 id="---Demo">-  Demo<a class="anchor-link" href="#---Demo">&#182;</a></h2><h2 id="---Results">-  Results<a class="anchor-link" href="#---Results">&#182;</a></h2><h2 id="---To-Do">-  To Do<a class="anchor-link" href="#---To-Do">&#182;</a></h2>
 </div>
 </div>
 </div></section></section><section><section>
@@ -11939,7 +11939,15 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Intro:-Zero-Inflation">Intro: Zero Inflation<a class="anchor-link" href="#Intro:-Zero-Inflation">&#182;</a></h1><h3 id="---Shortcomings-of-regular-poisson-regression-(assumptions-violated)---">-- Shortcomings of regular poisson regression (assumptions violated) --<a class="anchor-link" href="#---Shortcomings-of-regular-poisson-regression-(assumptions-violated)---">&#182;</a></h3><h3 id="---Count-models-with-extra-zeros-than-what-could-be-modelled-by-Poisson-(or-Negative-Binomial-or-Geometric)-Regression---">-- Count models with extra zeros than what could be modelled by Poisson (or Negative Binomial or Geometric) Regression --<a class="anchor-link" href="#---Count-models-with-extra-zeros-than-what-could-be-modelled-by-Poisson-(or-Negative-Binomial-or-Geometric)-Regression---">&#182;</a></h3><h3 id="---Insert-some-mathematical-formulations-here---">-- Insert some mathematical formulations here --<a class="anchor-link" href="#---Insert-some-mathematical-formulations-here---">&#182;</a></h3>
+<h1 id="Introduction:">Introduction:<a class="anchor-link" href="#Introduction:">&#182;</a></h1><h2 id="Poisson-Regression">Poisson Regression<a class="anchor-link" href="#Poisson-Regression">&#182;</a></h2><h3 id="Assumptions:">Assumptions:<a class="anchor-link" href="#Assumptions:">&#182;</a></h3><ul>
+<li>$y_i \textrm{ } \big| \textrm{ } x_i \sim \mathrm{Poisson}$:
+$$P \left( Y_i = y_i \textrm{ } | \textrm{ } x_i \right) = \frac{\exp(-\mu_i) \cdot \mu_i^{y_i}}{y_i!} \cdot \mathbb{1} \left( y_i \in \{0, 1, 2, \ldots \} \right), \quad \mu_i = \exp \left( x_i' \beta \right) $$</li>
+</ul>
+<ul>
+<li>Equidispersion: 
+$$E \left( Y_i \textrm{ } \big| \textrm{ } x_i\right) = \mu_i = Var \left( Y_i \textrm{ } \big| \textrm{ } x_i \right)$$</li>
+</ul>
+
 </div>
 </div>
 </div></section></section><section><section>
@@ -11947,12 +11955,28 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Applications-in-Different-Fields">Applications in Different Fields<a class="anchor-link" href="#Applications-in-Different-Fields">&#182;</a></h1><h3 id="Number-of-House-and-Senate-Actions-Taken-in-Response-to-Supreme-Court-Decisions-(1979-88)">Number of House and Senate Actions Taken in Response to Supreme Court Decisions (1979-88)<a class="anchor-link" href="#Number-of-House-and-Senate-Actions-Taken-in-Response-to-Supreme-Court-Decisions-(1979-88)">&#182;</a></h3><p>See paper <a href="http://journals.sagepub.com/doi/pdf/10.1177/0049124198026003004">here</a>
+<h2 id="Count-Data-in-Different-Fields">Count Data in Different Fields<a class="anchor-link" href="#Count-Data-in-Different-Fields">&#182;</a></h2><h3 id="Number-of-House-and-Senate-Actions-Taken-in-Response-to-Supreme-Court-Decisions-(1979-88)">Number of House and Senate Actions Taken in Response to Supreme Court Decisions (1979-88)<a class="anchor-link" href="#Number-of-House-and-Senate-Actions-Taken-in-Response-to-Supreme-Court-Decisions-(1979-88)">&#182;</a></h3><p>See paper <a href="http://journals.sagepub.com/doi/pdf/10.1177/0049124198026003004">here</a>
 <img src="supreme_ct.png" alt=""></p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Education">Education<a class="anchor-link" href="#Education">&#182;</a></h3><ul>
 <li>Modeling the number of courses failed in 2008-2009 at Iran University of Medical Sciences (See paper <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4764272/">here</a>)</li>
 </ul>
 <p><img src="fail.png" alt=""></p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Software-Analysis">Software Analysis<a class="anchor-link" href="#Software-Analysis">&#182;</a></h3><ul>
 <li>Modeling the number of faults in a source file during system tests (See paper <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=989459">here</a>).</li>
 </ul>
@@ -11960,29 +11984,24 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 
 </div>
 </div>
-</div><aside class="notes">
-
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="--Electronics/-Manufacturing:">- Electronics/ Manufacturing:<a class="anchor-link" href="#--Electronics/-Manufacturing:">&#182;</a></h3><p>Number of improperly soldered leads of components mounted on a printed wiring board. In general, number of defects on an item in a manufacturing process.
-<a href="https://www.researchgate.net/profile/Diane_Lambert2/publication/254333007_Zero-Inflated_Poisson_Regression_With_An_Application_to_Defects_in_Manufacturing/links/561d38d608aec7945a252dbb/Zero-Inflated-Poisson-Regression-With-An-Application-to-Defects-in-Manufacturing.pdf">https://www.researchgate.net/profile/Diane_Lambert2/publication/254333007_Zero-Inflated_Poisson_Regression_With_An_Application_to_Defects_in_Manufacturing/links/561d38d608aec7945a252dbb/Zero-Inflated-Poisson-Regression-With-An-Application-to-Defects-in-Manufacturing.pdf</a></p>
-<h3 id="--Social-Science:">- Social Science:<a class="anchor-link" href="#--Social-Science:">&#182;</a></h3><p>Estimating congressional response to Supreme Court decisions from 1979 to 1988 ("Warren and Burger eras": Supreme Court Chief Justices during that time.)
-<a href="http://journals.sagepub.com/doi/pdf/10.1177/0049124198026003004">http://journals.sagepub.com/doi/pdf/10.1177/0049124198026003004</a></p>
-<h3 id="--Education">- Education<a class="anchor-link" href="#--Education">&#182;</a></h3><p>An application of zero-inflated Poisson regression for software fault prediction.</p>
-<h3 id="--Traffic-Engineering:">- Traffic Engineering:<a class="anchor-link" href="#--Traffic-Engineering:">&#182;</a></h3><p>Modeling crashes involving pedestrians and motorized traffic</p>
-<h3 id="--Genetics:">- Genetics:<a class="anchor-link" href="#--Genetics:">&#182;</a></h3><p>A zero-inflated poisson model for genetic analysis of the number of mastitis cases in Norwegian Red cows.</p>
+<h2 id="Zero-Inflated-Poisson-Regression">Zero Inflated Poisson Regression<a class="anchor-link" href="#Zero-Inflated-Poisson-Regression">&#182;</a></h2><h3 id="Idea:-zeros-in-the-data-are-generated-by-a-separate-process-that-can-be-modeled-independently">Idea: zeros in the data are generated by a separate process that can be modeled independently<a class="anchor-link" href="#Idea:-zeros-in-the-data-are-generated-by-a-separate-process-that-can-be-modeled-independently">&#182;</a></h3><ul>
+<li>Poisson Count Model</li>
+<li>Zero Inflated Model</li>
+</ul>
 
 </div>
 </div>
-</div>
-</aside></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Intro:-Zero-Inflation">-  <del>Intro: Zero Inflation</del><a class="anchor-link" href="#---Intro:-Zero-Inflation">&#182;</a></h2><p><h1> - ML and EM Equations </h1></p>
+<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Introduction">-  <del>Introduction</del><a class="anchor-link" href="#---Introduction">&#182;</a></h2><p><h1> - ZIP Model Specifications </h1></p>
 <h2 id="---Algorithm-flowchart">-  Algorithm flowchart<a class="anchor-link" href="#---Algorithm-flowchart">&#182;</a></h2><h2 id="---Classes-and-Methods">-  Classes and Methods<a class="anchor-link" href="#---Classes-and-Methods">&#182;</a></h2><h2 id="---Usage">-  Usage<a class="anchor-link" href="#---Usage">&#182;</a></h2><h2 id="---Results">-  Results<a class="anchor-link" href="#---Results">&#182;</a></h2><h2 id="---To-Do">-  To Do<a class="anchor-link" href="#---To-Do">&#182;</a></h2>
 </div>
 </div>
@@ -11991,7 +12010,49 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Intro:-Zero-Inflation">-  <del>Intro: Zero Inflation</del><a class="anchor-link" href="#---Intro:-Zero-Inflation">&#182;</a></h2><h2 id="---ML-and-EM-Equations">-  <del>ML and EM Equations</del><a class="anchor-link" href="#---ML-and-EM-Equations">&#182;</a></h2><p><h1> - Algorithm flowchart </h1></p>
+<h1 id="ZIP-Model-Specifications">ZIP Model Specifications<a class="anchor-link" href="#ZIP-Model-Specifications">&#182;</a></h1><h3 id="Data-is-generated-by-one-of-two-processes,-with-each-process-chosen-with-probability-$\varphi_i$.">Data is generated by one of two processes, with each process chosen with probability $\varphi_i$.<a class="anchor-link" href="#Data-is-generated-by-one-of-two-processes,-with-each-process-chosen-with-probability-$\varphi_i$.">&#182;</a></h3><p>$ y_i = \begin{cases}
+    0      \quad &amp;\textrm{with probability $\varphi_i$} \\
+    g(y_i) \quad &amp;\textrm{with probability 1 - $\varphi_i$} 
+\end{cases}
+$</p>
+<h3 id="This-gives-us-the-following-probability-mass-function:">This gives us the following probability mass function:<a class="anchor-link" href="#This-gives-us-the-following-probability-mass-function:">&#182;</a></h3><p>$ P\left(Y_i = y_i \textrm{ } \big| \textrm{ } x_i, z_i \right) = \begin{cases}
+    \varphi_i + (1 - \varphi_i) \cdot \exp(-\mu_i)      \quad &amp;\textrm{if $y_i = 0$} \\
+    (1 - \varphi_i) \cdot \exp(-\mu_i) \cdot \mu_i^{y_i} \big/ y_i! \quad &amp;\textrm{if $y_i &gt; 0$} 
+\end{cases}
+$</p>
+<ul>
+<li>$\varphi_i = F_i = F\left(z_i' \gamma\right)$ is the link function</li>
+<li>$x_i$ is the vector of covariates for the count model</li>
+<li>$z_i$ is the vector of covariates for the zero inflation model</li>
+<li>$\gamma$ is the vector of zero inflation coefficients</li>
+<li>$\mu_i = \exp{x_i' \beta}$, where $\beta$ is the vector of coefficients for the count model</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="ZIP-Model-Specifications">ZIP Model Specifications<a class="anchor-link" href="#ZIP-Model-Specifications">&#182;</a></h1><h3 id="Expectation-and-Variance-Calculations">Expectation and Variance Calculations<a class="anchor-link" href="#Expectation-and-Variance-Calculations">&#182;</a></h3><ul>
+<li>$E \left( Y_i \textrm{ } \big| \textrm{ } x_i, z_i \right) = \mu_i \cdot (1 - \varphi_i)$</li>
+<li>$Var\left(Y_i \textrm{ } \big| \textrm{ } x_i, z_i\right) = E\left( Y_i \textrm{ } \big| \textrm{ } x_i, z_i \right) (1 + \mu_i \varphi_i) &gt; E \left( Y_i \textrm{ } \big| \textrm{ } x_i, z_i \right)$</li>
+</ul>
+<h3 id="Log-likelihood-can-then-be-written-in-a-general-form:">Log-likelihood can then be written in a general form:<a class="anchor-link" href="#Log-likelihood-can-then-be-written-in-a-general-form:">&#182;</a></h3><p>$$ \mathcal{L} = \sum_{i=1}^n w_i \log \left[ P\left( y_i \textrm{ } \big| \textrm{ } x_i, z_i  \right) \right] $$</p>
+<ul>
+<li>Exact form of log-likelihood arises when link function chosen </li>
+<li>Maximize this with Newton-Raphson or EM</li>
+</ul>
+<h4 id="(Zero-Inflated)-Negative-Binomial,-Geometric-Regression-are-other-options-that-may-better-handle-overdispersion">(Zero Inflated) Negative Binomial, Geometric Regression are other options that may better handle overdispersion<a class="anchor-link" href="#(Zero-Inflated)-Negative-Binomial,-Geometric-Regression-are-other-options-that-may-better-handle-overdispersion">&#182;</a></h4>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Introduction">-  <del>Introduction</del><a class="anchor-link" href="#---Introduction">&#182;</a></h2><h2 id="---ZIP-Model-Specifications">-  <del>ZIP Model Specifications</del><a class="anchor-link" href="#---ZIP-Model-Specifications">&#182;</a></h2><p><h1> - Algorithm flowchart </h1></p>
 <h2 id="---Classes-and-Methods">-  Classes and Methods<a class="anchor-link" href="#---Classes-and-Methods">&#182;</a></h2><h2 id="---Usage">-  Usage<a class="anchor-link" href="#---Usage">&#182;</a></h2><h2 id="---Results">-  Results<a class="anchor-link" href="#---Results">&#182;</a></h2><h2 id="---To-Do">-  To Do<a class="anchor-link" href="#---To-Do">&#182;</a></h2>
 </div>
 </div>
@@ -12000,7 +12061,16 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Intro:-Zero-Inflation">-  <del>Intro: Zero Inflation</del><a class="anchor-link" href="#---Intro:-Zero-Inflation">&#182;</a></h2><h2 id="---ML-and-EM-Equations">-  <del>ML and EM Equations</del><a class="anchor-link" href="#---ML-and-EM-Equations">&#182;</a></h2><h2 id="---Algorithm-flowchart">-  <del>Algorithm flowchart</del><a class="anchor-link" href="#---Algorithm-flowchart">&#182;</a></h2><p><h1> - Classes and Methods </h1></p>
+<p><img src="flowchart.png" alt=""></p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Introduction">-  <del>Introduction</del><a class="anchor-link" href="#---Introduction">&#182;</a></h2><h2 id="---ZIP-Model-Specifications">-  <del>ZIP Model Specifications</del><a class="anchor-link" href="#---ZIP-Model-Specifications">&#182;</a></h2><h2 id="---Algorithm-flowchart">-  <del>Algorithm flowchart</del><a class="anchor-link" href="#---Algorithm-flowchart">&#182;</a></h2><p><h1> - Classes and Methods </h1></p>
 <h2 id="---Usage">-  Usage<a class="anchor-link" href="#---Usage">&#182;</a></h2><h2 id="---Results">-  Results<a class="anchor-link" href="#---Results">&#182;</a></h2><h2 id="---To-Do">-  To Do<a class="anchor-link" href="#---To-Do">&#182;</a></h2>
 </div>
 </div>
@@ -12044,7 +12114,7 @@ Presentation: <a href="https://rkapr.github.io/zeroinfl">rkapr.github.io/zeroinf
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Intro:-Zero-Inflation">-  <del>Intro: Zero Inflation</del><a class="anchor-link" href="#---Intro:-Zero-Inflation">&#182;</a></h2><h2 id="---ML-and-EM-Equations">-  <del>ML and EM Equations</del><a class="anchor-link" href="#---ML-and-EM-Equations">&#182;</a></h2><h2 id="---Algorithm-flowchart">-  <del>Algorithm flowchart</del><a class="anchor-link" href="#---Algorithm-flowchart">&#182;</a></h2><h2 id="---Classes-and-Methods">-  <del>Classes and Methods</del><a class="anchor-link" href="#---Classes-and-Methods">&#182;</a></h2><p><h1> - Usage </h1></p>
+<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="---Intro:-Zero-Inflation">-  <del>Intro: Zero Inflation</del><a class="anchor-link" href="#---Intro:-Zero-Inflation">&#182;</a></h2><h2 id="---ZIP-Model-Specifications">-  <del>ZIP Model Specifications</del><a class="anchor-link" href="#---ZIP-Model-Specifications">&#182;</a></h2><h2 id="---Algorithm-flowchart">-  <del>Algorithm flowchart</del><a class="anchor-link" href="#---Algorithm-flowchart">&#182;</a></h2><h2 id="---Classes-and-Methods">-  <del>Classes and Methods</del><a class="anchor-link" href="#---Classes-and-Methods">&#182;</a></h2><p><h1> - Usage </h1></p>
 <h2 id="---Results">-  Results<a class="anchor-link" href="#---Results">&#182;</a></h2><h2 id="---To-Do">-  To Do<a class="anchor-link" href="#---To-Do">&#182;</a></h2>
 </div>
 </div>
@@ -12393,7 +12463,7 @@ Log-likelihood: -1.629e+04 on 11 Df
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="--Intro:-Zero-Inflation">- <del>Intro: Zero Inflation</del><a class="anchor-link" href="#--Intro:-Zero-Inflation">&#182;</a></h2><h2 id="--ML-and-EM-Equations">- <del>ML and EM Equations</del><a class="anchor-link" href="#--ML-and-EM-Equations">&#182;</a></h2><h2 id="--Algorithm-flowchart">- <del>Algorithm flowchart</del><a class="anchor-link" href="#--Algorithm-flowchart">&#182;</a></h2><h2 id="--Classes-and-Methods">- <del>Classes and Methods</del><a class="anchor-link" href="#--Classes-and-Methods">&#182;</a></h2><h2 id="--Usage">- <del>Usage</del><a class="anchor-link" href="#--Usage">&#182;</a></h2><p><h1> - Results</h1></p>
+<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="--Introduction">- <del>Introduction</del><a class="anchor-link" href="#--Introduction">&#182;</a></h2><h2 id="--ZIP-Model-Specifications">- <del>ZIP Model Specifications</del><a class="anchor-link" href="#--ZIP-Model-Specifications">&#182;</a></h2><h2 id="--Algorithm-flowchart">- <del>Algorithm flowchart</del><a class="anchor-link" href="#--Algorithm-flowchart">&#182;</a></h2><h2 id="--Classes-and-Methods">- <del>Classes and Methods</del><a class="anchor-link" href="#--Classes-and-Methods">&#182;</a></h2><h2 id="--Usage">- <del>Usage</del><a class="anchor-link" href="#--Usage">&#182;</a></h2><p><h1> - Results</h1></p>
 <h2 id="---To-Do">-  To Do<a class="anchor-link" href="#---To-Do">&#182;</a></h2>
 </div>
 </div>
@@ -12779,7 +12849,7 @@ X(Intercept)      Xhealthpoor Xhealthexcellent      Xgendermale      Xprivinsyes
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="--Intro:-Zero-Inflation">- <del>Intro: Zero Inflation</del><a class="anchor-link" href="#--Intro:-Zero-Inflation">&#182;</a></h2><h2 id="--ML-and-EM-Equations">- <del>ML and EM Equations</del><a class="anchor-link" href="#--ML-and-EM-Equations">&#182;</a></h2><h2 id="--Algorithm-flowchart">- <del>Algorithm flowchart</del><a class="anchor-link" href="#--Algorithm-flowchart">&#182;</a></h2><h2 id="--Classes-and-Methods">- <del>Classes and Methods</del><a class="anchor-link" href="#--Classes-and-Methods">&#182;</a></h2><h2 id="--Usage">- <del>Usage</del><a class="anchor-link" href="#--Usage">&#182;</a></h2><h2 id="--Results">- <del>Results</del><a class="anchor-link" href="#--Results">&#182;</a></h2><h1> - To Do</h1>
+<h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><h2 id="--Introduction">- <del>Introduction</del><a class="anchor-link" href="#--Introduction">&#182;</a></h2><h2 id="--ZIP-Model-Specifications">- <del>ZIP Model Specifications</del><a class="anchor-link" href="#--ZIP-Model-Specifications">&#182;</a></h2><h2 id="--Algorithm-flowchart">- <del>Algorithm flowchart</del><a class="anchor-link" href="#--Algorithm-flowchart">&#182;</a></h2><h2 id="--Classes-and-Methods">- <del>Classes and Methods</del><a class="anchor-link" href="#--Classes-and-Methods">&#182;</a></h2><h2 id="--Usage">- <del>Usage</del><a class="anchor-link" href="#--Usage">&#182;</a></h2><h2 id="--Results">- <del>Results</del><a class="anchor-link" href="#--Results">&#182;</a></h2><h1> - To Do</h1>
 </div>
 </div>
 </div></section></section><section><section>
