@@ -802,3 +802,89 @@ class ZeroInflatedResults(object):
         if self.converged is False:
             print("Failed to converge.")
         print("Log-likelihood: "+str("{:.3e}".format(Decimal(self.loglik)))+f" on {self.df_model} Df.")        
+      
+    
+    # m: fitted zip model
+    # pred_type: 'response', 'count', 'zero', or 'prob'
+    # newdata_X: design matrix for count model
+    # newdata_Z: design matrix for zero model
+    def predict(m, pred_type, newdata_X = None, newdata_Z = None): 
+
+        if pred_type not in ["response", "count", "zero", "prob"]:
+            print("Error: Prediction of type \'" + pred_type + "\' is not supported")
+            return
+
+        if newdata_X is None and newdata_Z is None:
+            rval = m.fitted_values
+            if pred_type != 'response':
+                X = m._X                   # training matrix for count model with intercept in first column
+                Z = m._Z                   # training matrix for zero model with intercept in first column
+
+                ## offset 
+                # offsetx = 0.0
+                #offsetx = np.repeat(0.0,self.n)
+                offsetx = np.repeat(0.0, X.shape[0])
+
+                # offsetz = 0.0
+                # offsetz = np.repeat(0.0,self.n)
+                offsetz = np.repeat(0.0, Z.shape[0])
+
+                ## count mean
+                # mu = np.exp(np.dot(X,m.coefficients['count']) + offsetx)
+                ## binary mean
+                # phi = self.linkobj.link_inv(np.dot(Z, m.coefficients['zero']) + offsetz)
+                # Not sure if it's what's needed here but consider code commented above. was compatible
+                # with offsetx and offsetz in earlier functions.
+
+                mu = np.exp(np.matmul(X, m.coefficients['count']) + offsetx)
+                phi = m.linkinv(np.matmul(Z, m.coefficients['zero']) + offsetz)
+        elif newdata_X is None or newdata_Z is None:
+            print("Design Matrix for both count model and zero-inflated model must be specified")
+            return
+        else:
+            X = newdata_X
+            Z = newdata_Z
+            offsetx = np.repeat(0.0, X.shape[0])
+            offsetz = np.repeat(0.0, Z.shape[0])
+            mu = np.exp(np.matmul(X, m.coefficients['count']) + offsetx)
+            phi = m.linkinv(np.matmul(Z, m.coefficients['zero']) + offsetz)
+            rval = (1 - phi) * mu
+
+
+        # predicted means for count/zero component
+        if pred_type == 'count':
+            rval = mu
+        if pred_type == 'zero':
+            rval = phi
+
+        if pred_type == 'prob':
+            if(y is not none):
+                y = np.squeeze(m.y)
+            else:
+                print("Predicted Probabilities require non-null values for y")
+
+            yUnique = np.arange(0, np.max(m0.y) + 1)
+            nUnique = len(yUnique)
+            rval = np.zeros(shape = (len(rval), nUnique))
+
+            if m.dist == 'poisson':
+                rval[:,0] = phi + (1 - phi) * np.exp(-mu) # first column of r_val
+                for i in np.arange(1,nUnique):
+                    # can this be vectorized instead of for loop?
+                    rval[:,i] = (1 - phi) * poisson.pmf(yUnique[i], mu)
+            elif m.dist == 'negbin':
+                theta = self.theta
+                rval[:,0] = phi + (1 - phi) * nbinom.pmf(yUnique[i],*self.convert_params(theta = theta, mu = mu))
+                for i in np.arange(1,nUnique):
+                    # can this be vectorized instead of for loop?
+                    # should size be 1 in negbin?
+                    rval[:,i] = (1 - phi) * nbinom.pmf(yUnique[i],*self.convert_params(theta = 1, mu = mu))
+            elif m.dist == 'geom':
+                rval[:,0] = phi + (1 - phi) * nbinom.pmf(yUnique[i],*self.convert_params(theta = 1, mu = mu))
+                for i in np.arange(1,nUnique):
+                    # can this be vectorized instead of for loop?
+                    rval[:,i] = (1 - phi) * nbinom.pmf(yUnique[i],*self.convert_params(theta = 1, mu = mu))
+            else: 
+                print("unsupported distribution")
+
+        return(rval)
